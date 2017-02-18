@@ -1,5 +1,10 @@
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
+
+import com.github.javaparser.*;
+import com.github.javaparser.ast.CompilationUnit;
+
 
 public class umlparser {
 	public static void main(String args[]) {
@@ -16,11 +21,23 @@ public class umlparser {
 				return name.endsWith(".java");
 			}
 		});
-		for (File a: fileList) {
-			System.out.println(a.getName());
+		for (File file: fileList) {
+			try {
+				CompilationUnit cu = JavaParser.parse(file);
+				//System.out.println(cu.toString());
+		        ParseClass classes = new ParseClass(cu);
+		        classes.getVariableName();
+		        //classes.constructClassAttribute();
+		        System.out.println("");
+		        
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 		}
-		
-		
 	}
 
 }
