@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.github.javaparser.*;
 import com.github.javaparser.ast.CompilationUnit;
@@ -10,9 +12,8 @@ public class umlparser {
 	public static void main(String args[]) {
 		String dirpath = args[0];
 		String output = args[1];
-		//System.out.println(dirpath);
-		//System.out.println(output);
-		File dir = new File(dirpath); 
+		File dir = new File(dirpath);
+		List<CompilationUnit> cuArray = new ArrayList<>();
 		if (!dir.exists()) {
 			System.out.println("Directory not exist!");
 		}
@@ -21,22 +22,17 @@ public class umlparser {
 				return name.endsWith(".java");
 			}
 		});
+		try {
 		for (File file: fileList) {
-			try {
 				CompilationUnit cu = JavaParser.parse(file);
-				//System.out.println(cu.toString());
-		        ParseClass classes = new ParseClass(cu);
-		        classes.getVariableName();
-		        //classes.constructClassAttribute();
-		        System.out.println("");
+				cuArray.add(cu);
+		}
 		        
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
+			ParseClass classes = new ParseClass(cuArray,output);
+	        classes.start();
+	       // System.out.println(classes.parseCA());
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
