@@ -9,3 +9,4 @@ Eclipse
 
 Before started:
 Please download javaparser-core-3.0.1.jar
+add javaparser-core-3.0.1.jar into eclipse library
