@@ -7,7 +7,7 @@ Java JDK
 Internet connection
 
 Before started:
-Please download javaparser-core-3.0.1.jar and umlparser
+Please download javaparser-core-3.0.1.jar and umlparser.jar
 add javaparser-core-3.0.1.jar
 download the umlparser.java/ parseClass.java/ generateUML.java/ ClassAttribute.java in the same folder
 all the test case are in the test folder
