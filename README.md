@@ -13,3 +13,4 @@ all the test case are in the test folder
 
 Please enter in command line:
 
+java -jar UMLparser.java path-to-test output-name
