@@ -7,12 +7,12 @@ Java JDK
 Internet connection
 
 Before started:
-Please download javaparser-core-3.0.1.jar and UMLparser.jar
+Please download UMLparser.jar
 
 all the test case are in the test folder
 
 Please enter in command line:
 
-git clone …
+git clone 
 
 java -jar UMLparser.java path-to-test output-name
