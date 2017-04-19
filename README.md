@@ -1,6 +1,6 @@
 # umlparser
 
-UMLparser is a tool that can convert java file to corresponding UML graph.
+UMLparser is a tool that can convert java file to corresponding UML class graph, given directory where java file is stored.
 
 Environment setting up:
 Java JDK
