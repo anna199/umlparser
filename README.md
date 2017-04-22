@@ -13,6 +13,6 @@ all the test case are in the test folder
 
 Please enter in command line:
 
-git clone 
+git clone https://github.com/anna199/umlparser.git
 
-java -jar UMLparser.java path-to-test output-name
+java -jar UMLparser.java [path-to-test-folder][output-figure-name]
