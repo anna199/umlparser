@@ -16,3 +16,6 @@ Please enter in command line:
 git clone https://github.com/anna199/umlparser.git
 
 java -jar UMLparser.java [path-to-test-folder][output-figure-name]
+
+Detail about project:
+project utilized javaparser and yUML to parse the javacode and create UML class diagram accordingly.
