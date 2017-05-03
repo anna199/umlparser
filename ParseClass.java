@@ -183,11 +183,15 @@ public class ParseClass {
 						s = s.substring(0, s.length() - 1);
 						String[] s_private= s.split(" ");
 						String current = s_private[1];
+						String current_interface = "<<interface>>;" + current;
 						if (current.contains("<")) {
 								results.add(parseCollection(current, a));
 							}
 						else if (map.containsKey(current)) {
 							results.add(parseDep(current, a));
+						}
+						else if (map.containsKey(current_interface)) {
+							results.add(parseDep(current_interface, a));
 						}
 						else {	
 						ca_string.append(checkModifier(s));
@@ -247,9 +251,18 @@ public class ParseClass {
 	private String parseCollection(String s_private, String a) {
 		StringBuilder ca_string= new StringBuilder();
 		String next_class_name = s_private.substring(s_private.indexOf('<') + 1, s_private.indexOf('>'));
+		String possible_interface = "<<interface>>;" + next_class_name;
 		if (map.containsKey(next_class_name)) {
+			if (map.get(next_class_name).getvar().size() == 0) {
+				ca_string.append('[');
+				ca_string.append(a);
+				ca_string.append("]-*[");
+				ca_string.append(next_class_name);
+				ca_string.append(']');
+				return (ca_string.toString());
+			}
 			for (String next: map.get(next_class_name).getvar()) {
-				if (next.contains(a) && !next.contains("<")) {
+				if ((next.contains(a) && !next.contains("<")) || !next.contains(a)) {
 					ca_string.append('[');
 					ca_string.append(a);
 					ca_string.append("]-*[");
@@ -269,17 +282,56 @@ public class ParseClass {
 				}
 			}
 		}
+		if (map.containsKey(possible_interface)) {
+			if (map.get(possible_interface).getvar().size() == 0) {
+				ca_string.append('[');
+				ca_string.append(a);
+				ca_string.append("]-*[");
+				ca_string.append(possible_interface);
+				ca_string.append(']');
+				return (ca_string.toString());
+			}
+			for (String next: map.get(possible_interface).getvar()) {
+				if ((next.contains(a) && !next.contains("<"))|| !next.contains(a)) {
+					ca_string.append('[');
+					ca_string.append(a);
+					ca_string.append("]-*[");
+					ca_string.append(possible_interface);
+					ca_string.append(']');
+					map.get(possible_interface).getvar().remove(next);
+					return (ca_string.toString());
+				}
+				if (next.contains(a) && next.contains("<")) {
+					ca_string.append('[');
+					ca_string.append(a);
+					ca_string.append("]*-*[");
+					ca_string.append(possible_interface);
+					ca_string.append(']');
+					map.get(possible_interface).getvar().remove(next);
+					return (ca_string.toString());
+				}
+			}
+		}
 		return "";
 	}
 	private String parseDep(String s_private, String a) {
 		StringBuilder ca_string= new StringBuilder();
 		String next_class_name = s_private;
+		String possible_interface = "<<interface>>;" + next_class_name;
 		if (map.containsKey(next_class_name)) {
+			if (map.get(next_class_name).getvar().size() == 0) {
+				ca_string.append('[');
+				ca_string.append(a);
+				ca_string.append("]-[");
+				ca_string.append(next_class_name);
+				ca_string.append(']');
+				return (ca_string.toString());
+			}
 			for (String next: map.get(next_class_name).getvar()) {
-				if (next.contains(a) && !next.contains("<")) {
+				if ((next.contains(a) && !next.contains("<"))|| !next.contains(a)) {
 					ca_string.append('[');
 					ca_string.append(a);
-					ca_string.append("]-1[");
+					ca_string.append("]-[");
 					ca_string.append(next_class_name);
 					ca_string.append(']');
 					map.get(next_class_name).getvar().remove(next);
@@ -292,6 +344,37 @@ public class ParseClass {
 					ca_string.append(next_class_name);
 					ca_string.append(']');
 					map.get(next_class_name).getvar().remove(next);
+					return (ca_string.toString());
+				}
+			}
+		}
+		if (map.containsKey(possible_interface)) {
+			
+			if (map.get(possible_interface).getvar().size() == 0) {
+				ca_string.append('[');
+				ca_string.append(a);
+				ca_string.append("]-1[");
+				ca_string.append(possible_interface);
+				ca_string.append(']');
+				return (ca_string.toString());
+			}
+			for (String next: map.get(possible_interface).getvar()) {
+				if ((next.contains(a) && !next.contains("<"))|| !next.contains(a)) {
+					ca_string.append('[');
+					ca_string.append(a);
+					ca_string.append("]-1[");
+					ca_string.append(possible_interface);
+					ca_string.append(']');
+					map.get(possible_interface).getvar().remove(next);
+					return (ca_string.toString());
+				}
+				if (next.contains(a) && next.contains("<")) {
+					ca_string.append('[');
+					ca_string.append(a);
+					ca_string.append("]*-1[");
+					ca_string.append(possible_interface);
+					ca_string.append(']');
+					map.get(possible_interface).getvar().remove(next);
 					return (ca_string.toString());
 				}
 			}
